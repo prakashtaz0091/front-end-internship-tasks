@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 5px 5px 5px rgba(177, 177, 177, 0.164);
+}
+
+form>label {
+    position: absolute;
+    top: -14px;
+    background-color: white;
+    font-size: 1.1rem;
+    font-weight: bolder;
+}
+
+input {
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid grey;
+    outline: none;
+    max-width: 300px;
+}
+
+.toolkit {
+    position: absolute;
+    top: -3px;
+    right: 20px;
+    display: flex;
+    gap: 5px;
+
+}
+
+#expand-btn,
+#save-btn,
+#cancel-btn {
+    padding: 10px;
+    border-radius: 6px;
+    animation: 0.2s;
+}
+
+#expand-btn:hover {
+    background-color: rgba(245, 222, 179, 0.274);
+}
+
+#save-btn:hover {
+    background-color: rgba(245, 222, 179, 0.274);
+}
+
+#cancel-btn:hover {
+    background-color: rgba(245, 222, 179, 0.274);
+}
+
+#save-btn,
+#cancel-btn {
+    display: none;
+}
+
+
+
+#suggestions{
+    max-width: 300px;
+    padding: 10px;
+    background-color: rgba(177, 177, 177, 0.164);
+    border-radius: 10px;
+}
+
+#suggestions>li{
+    list-style: none;
+    cursor: pointer;
+}
+
+#suggestions > li:hover{
+    background-color:rgba(245, 222, 179, 0.274);
+}
+
+#selected-items{
+    background-color: rgba(177, 177, 177, 0.164);
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+#selected-items > li{
+    list-style: none;
+    background-color: rgba(177, 177, 177, 0.164);
+    width: fit-content;
+    padding: 5px 10px;
+    display: inline-block;
+    margin:  5px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.selected-item{
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: aliceblue;
+}
+
+.control-btns{
+    margin: 5px 0;
+}
+.control-btns button{
+    border-radius: 8px;
+    padding: 0 5px;
+    border: 1px solid grey;
+    outline: none;
+}
