@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-form {
+.main {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@ form {
     box-shadow: 0 5px 5px 5px rgba(177, 177, 177, 0.164);
 }
 
-form>label {
+.main>label {
     position: absolute;
     top: -14px;
     background-color: white;
@@ -58,10 +58,13 @@ input {
     background-color: rgba(245, 222, 179, 0.274);
 }
 
-#save-btn,
-#cancel-btn {
-    display: none;
+#add-more-btn {
+    padding: 5px;
+    margin: 5px;
+    background-color: rgba(245, 222, 179, 0.274);
 }
+
+
 
 
 
@@ -81,10 +84,14 @@ input {
     background-color:rgba(245, 222, 179, 0.274);
 }
 
-#selected-items{
+#selected-items, #saved-items{
     background-color: rgba(177, 177, 177, 0.164);
     margin: 10px 0;
+    padding: 5px 10px;
     border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #selected-items > li{
@@ -98,12 +105,23 @@ input {
     border-radius: 8px;
 }
 
-.selected-item{
-    display: inline-block;
+.selected-item, .saved-item{
+    display: flex;
+    gap: 5px;
+    width: fit-content;
     padding: 5px;
     margin: 5px;
     border-radius: 8px;
     background-color: aliceblue;
+    align-items: center;
+}
+
+.saved-item > label{
+    margin-bottom: 0;
+}
+
+.selected-item > i:hover{
+    background-color: rgba(0, 255, 0, 0.795);
 }
 
 .control-btns{
