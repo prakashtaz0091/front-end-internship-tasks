@@ -64,6 +64,12 @@ input {
     background-color: rgba(245, 222, 179, 0.274);
 }
 
+#delete-btn, #cancel-btn-2{
+    display: none;
+    padding: 5px;
+    margin: 5px;
+    background-color: rgba(245, 222, 179, 0.274);
+}
 
 
 

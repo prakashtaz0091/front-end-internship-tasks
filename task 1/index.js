@@ -56,8 +56,8 @@ expandBtn.addEventListener('click', () => {
     cancelBtn.style.display = cancelBtn.style.display === 'none' ? 'block' : 'none';
 });
 
-cancelBtn.addEventListener('click',()=>{
-    selectedItems.innerHTML=""
+cancelBtn.addEventListener('click', () => {
+    selectedItems.innerHTML = ""
     hideToolkitMenu()
 })
 
@@ -168,12 +168,14 @@ saveBtn.addEventListener("click", function () {
     hideIfEmpty()
     emptySelectedItems()
     hideForm()
-    if(!isVisible(savedItemsContainer)){
-        addMoreBtn.style.display="none"
+    if (!isVisible(savedItemsContainer)) {
+        addMoreBtn.style.display = "none"
     }
-    else{
-        addMoreBtn.style.display="inline-block"
-        
+    else {
+        addMoreBtn.style.display = "inline-block"
+        deleteButton.style.display = "inline-block"
+        cancelButton2.style.display = "inline-block"
+
     }
 
 });
@@ -247,20 +249,50 @@ const showForm = () => {
 const addMoreBtn = document.getElementById("add-more-btn")
 addMoreBtn.addEventListener('click', () => {
     showForm()
-  
+
 })
 
 
-function isVisible(element){
+
+function isVisible(element) {
     const style = window.getComputedStyle(element);
     return (style.display !== 'none');
-    
+
 }
 
-if(!isVisible(savedItemsContainer)){
-    addMoreBtn.style.display="none"
+if (!isVisible(savedItemsContainer)) {
+    addMoreBtn.style.display = "none"
 }
-else{
-    addMoreBtn.style.display="inline-block"
-    
+else {
+    addMoreBtn.style.display = "inline-block"
+
 }
+
+
+const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]');
+const deleteButton = document.getElementById("delete-btn")
+const cancelButton2 = document.getElementById('cancel-btn-2');
+
+
+
+
+// Add event listener to the delete button
+deleteButton.addEventListener('click', () => {
+    // Get a list of all the checkboxes that are checked
+    const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]:checked');
+
+    // Remove each checked item from the savedItemsContainer
+    checkboxes.forEach((checkbox) => {
+        const savedItem = checkbox.parentNode;
+        savedItemsContainer.removeChild(savedItem);
+    });
+});
+
+// Add event listener to the cancel button
+cancelButton2.addEventListener('click', () => {
+    // Uncheck all checkboxes inside the savedItemsContainer
+    const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+});
