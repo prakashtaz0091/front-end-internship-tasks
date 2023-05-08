@@ -51,10 +51,7 @@ const saveBtn = document.getElementById("save-btn")
 const cancelBtn = document.getElementById("cancel-btn")
 const expandBtn = document.getElementById("expand-btn")
 hideToolkitMenu()
-expandBtn.addEventListener('click', () => {
-    saveBtn.style.display = saveBtn.style.display === 'none' ? 'block' : 'none';
-    cancelBtn.style.display = cancelBtn.style.display === 'none' ? 'block' : 'none';
-});
+
 
 cancelBtn.addEventListener('click', () => {
     selectedItems.innerHTML = ""
@@ -162,12 +159,15 @@ saveBtn.addEventListener("click", function () {
         if (!savedItems.includes(textContent)) { // check if the saved items array already includes the text content
             savedItems.push(textContent); // add the trimmed text content to saved items
         }
+     
     });
+    
 
     showSavedItems()
     hideIfEmpty()
     emptySelectedItems()
     hideForm()
+    hideToolkitMenu()
     if (!isVisible(savedItemsContainer)) {
         addMoreBtn.style.display = "none"
     }
@@ -284,6 +284,8 @@ deleteButton.addEventListener('click', () => {
     // Remove each checked item from the savedItemsContainer
     checkboxes.forEach((checkbox) => {
         const savedItem = checkbox.parentNode;
+        const indexOfSavedItem = savedItems.indexOf(savedItem.textContent)
+        savedItems.splice(indexOfSavedItem)
         savedItemsContainer.removeChild(savedItem);
     });
 });
