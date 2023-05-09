@@ -1,38 +1,27 @@
-const searchInput = document.getElementById('search');
+const saveBtn = document.getElementById("save-btn")
+const deleteBtn = document.getElementById("delete-btn")
+const cancelBtn = document.getElementById("cancel-btn")
+const cancelBtn2= document.getElementById("cancel-btn-2")
+const editBtn= document.getElementById("edit-btn")
+const controlBtns = document.getElementById("control-btns")
+
+saveBtn.style.display = "none"
+deleteBtn.style.display = "none"
+cancelBtn.style.display = "none"
+cancelBtn2.style.display = "none"
+editBtn.style.display="none"
+
+
+
+
+const searchInput = document.getElementById("search-input")
 const suggestionsList = document.getElementById('suggestions');
-
-//initialize the suggestions list function
-const initSuggestionsList = () => {
-    if (suggestionsList.childNodes.length < 1) {
-        suggestionsList.style.display = "none"
-    }
-
-}
-
-//hide toolkit menu
-const hideToolkitMenu = () => {
-    cancelBtn.style.display = "none"
-    saveBtn.style.display = "none"
-}
-
-//show toolkit menu
-const showToolkitMenu = () => {
-    cancelBtn.style.display = "block"
-    saveBtn.style.display = "block"
-}
-
-//hide saved-items container
-const hideSavedItemsContainer = () => {
-    savedItems.style.display = "none"
-}
-
-
-//suggestions list initialized 
-initSuggestionsList()
 
 searchInput.addEventListener('input', () => {
     const inputValue = searchInput.value;
     if (inputValue.length >= 3) {
+        
+        
 
         const suggestedKeywords = ['parrot', 'parrot special', 'cat', 'catwwsss', 'elderberry'];
         const filteredKeywords = suggestedKeywords.filter(keyword => keyword.includes(inputValue));
@@ -47,23 +36,7 @@ searchInput.addEventListener('input', () => {
 
 
 
-const saveBtn = document.getElementById("save-btn")
-const cancelBtn = document.getElementById("cancel-btn")
-const expandBtn = document.getElementById("expand-btn")
-hideToolkitMenu()
-
-
-cancelBtn.addEventListener('click', () => {
-    selectedItems.innerHTML = ""
-    hideToolkitMenu()
-})
-
-
-
-const list = document.getElementById('suggestions');
 const selectedItems = document.getElementById('selected-items');
-const selectAllButton = document.getElementById('select-all');
-const clearButton = document.getElementById('clear');
 
 const addItem = (event) => {
     if (event.target.tagName === 'LI') {
@@ -88,17 +61,22 @@ const addItem = (event) => {
         // Add click event listener to the cross icon
         selectedElement.querySelector('i').addEventListener('click', () => {
             selectedElement.remove();
+            if (!isVisible(selectedItems)) {
+                saveBtn.style.display = "none"
+                cancelBtn.style.display = "none"
+            }
         });
 
         // Add the new element to the selected-items div
         selectedItems.appendChild(selectedElement);
-        hideIfEmpty()
+
 
     }
 }
 
+
 const addAllItems = () => {
-    const items = list.querySelectorAll('li');
+    const items = suggestionsList.querySelectorAll('li');
     items.forEach(item => {
         const selectedItemText = item.textContent;
 
@@ -121,36 +99,62 @@ const addAllItems = () => {
         // Add click event listener to the cross icon
         selectedElement.querySelector('i').addEventListener('click', () => {
             selectedElement.remove();
+            if (!isVisible(selectedItems)) {
+                saveBtn.style.display = "none"
+                cancelBtn.style.display = "none"
+            }
         });
 
         // Add the new element to the selected-items div
         selectedItems.appendChild(selectedElement);
-        hideIfEmpty()
     });
 }
 
+function isVisible(element) {
+    const style = window.getComputedStyle(element);
+    return (style.display !== 'none');
 
-list.addEventListener('click', (event) => {
+}
+
+suggestionsList.addEventListener('click', (event) => {
     addItem(event)
-    showToolkitMenu()
+    if (isVisible(selectedItems)) {
+        saveBtn.style.display = "inline-block"
+        cancelBtn.style.display = "inline-block"
+    }
 });
+
+const selectAllButton = document.getElementById("select-all-btn")
 
 selectAllButton.addEventListener('click', () => {
     addAllItems()
-    showToolkitMenu()
+    if (isVisible(selectedItems)) {
+        saveBtn.style.display = "inline-block"
+        cancelBtn.style.display = "inline-block"
+    }
 })
+
+
+const clearButton = document.getElementById("clear-btn")
 
 clearButton.addEventListener('click', () => {
+    
     searchInput.value = ""
-    suggestionsList.innerHTML = ""
-    initSuggestionsList()
+    suggestionsList.innerHTML=""
+    suggestionsList.style.display = "none"
+
 })
 
+cancelBtn.addEventListener('click',()=>{
+    selectedItems.innerHTML=""
+    if (!isVisible(selectedItems)) {
+        saveBtn.style.display = "none"
+        cancelBtn.style.display = "none"
+    }
+})
 
+const savedItemsContainer = document.getElementById("saved-items")
 
-
-
-// saving the items
 const savedItems = []; // initialize an empty array to store saved items
 saveBtn.addEventListener("click", function () {
     const selectedItems = document.querySelectorAll("#selected-items .selected-item");
@@ -164,25 +168,19 @@ saveBtn.addEventListener("click", function () {
     
 
     showSavedItems()
-    hideIfEmpty()
-    emptySelectedItems()
-    hideForm()
-    hideToolkitMenu()
-    if (!isVisible(savedItemsContainer)) {
-        addMoreBtn.style.display = "none"
-    }
-    else {
-        addMoreBtn.style.display = "inline-block"
-        deleteButton.style.display = "inline-block"
-        cancelButton2.style.display = "inline-block"
-
+    if(isVisible(savedItemsContainer)){
+        saveBtn.style.display="none"
+        cancelBtn.click() //removing all the selected items
+        cancelBtn.style.display="none"
+        editBtn.style.display="inline-block"
+        searchInput.style.display="none"
+        clearButton.click()
+        controlBtns.style.display = "none"
     }
 
+    
 });
 
-
-//showing saved items function
-const savedItemsContainer = document.getElementById("saved-items");
 const showSavedItems = () => {
 
     savedItemsContainer.innerHTML = ""
@@ -194,6 +192,7 @@ const showSavedItems = () => {
 
         // create a new checkbox input element for the item
         const checkbox = document.createElement("input");
+        checkbox.classList.add("saved-items-checkbox")
         checkbox.type = "checkbox";
         checkbox.value = item;
         checkbox.id = "checkbox-" + index;
@@ -209,75 +208,39 @@ const showSavedItems = () => {
 
         // append the item div to the saved items container
         savedItemsContainer.appendChild(itemDiv);
+
+        checkbox.style.display="none"
     });
+
+    console.log(savedItems);
+    
+    
 }
 
-const emptySelectedItems = () => {
-    const selectedItems = document.getElementById('selected-items');
-    selectedItems.innerHTML = ''; // remove all child elements
-
-}
-
-// Check if saved-items div has any child elements
-const hideIfEmpty = () => {
-    if (savedItemsContainer.childElementCount === 0) {
-        savedItemsContainer.style.display = 'none';
-    } else {
-        savedItemsContainer.style.display = 'flex';
+editBtn.addEventListener("click",()=>{
+    const savedItemsCheckbox = document.getElementsByClassName("saved-items-checkbox")
+    for(let checkbox of savedItemsCheckbox){
+        checkbox.style.display="block"
     }
-
-    // Check if selected-items div has any child elements
-    if (selectedItems.childElementCount === 0) {
-        selectedItems.style.display = 'none';
-    } else {
-        selectedItems.style.display = 'flex';
-    }
-}
-
-hideIfEmpty()
-
-//hide form
-const form = document.getElementById("form")
-const hideForm = () => {
-    form.style.display = "none"
-}
-const showForm = () => {
-    form.style.display = "block"
-}
-
-//adding more items
-const addMoreBtn = document.getElementById("add-more-btn")
-addMoreBtn.addEventListener('click', () => {
-    showForm()
-
+    editBtn.style.display="none"
+    deleteBtn.style.display="block"
+    cancelBtn2.style.display="block"
 })
 
 
-
-function isVisible(element) {
-    const style = window.getComputedStyle(element);
-    return (style.display !== 'none');
-
-}
-
-if (!isVisible(savedItemsContainer)) {
-    addMoreBtn.style.display = "none"
-}
-else {
-    addMoreBtn.style.display = "inline-block"
-
-}
-
-
-const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]');
-const deleteButton = document.getElementById("delete-btn")
-const cancelButton2 = document.getElementById('cancel-btn-2');
-
-
-
+cancelBtn2.addEventListener('click',()=>{
+    const savedItemsCheckbox = document.getElementsByClassName("saved-items-checkbox")
+    for(let checkbox of savedItemsCheckbox){
+        checkbox.checked = false
+        checkbox.style.display="none"
+        editBtn.style.display="block"
+        deleteBtn.style.display="none"
+        cancelBtn2.style.display="none"
+    }
+})
 
 // Add event listener to the delete button
-deleteButton.addEventListener('click', () => {
+deleteBtn.addEventListener('click', () => {
     // Get a list of all the checkboxes that are checked
     const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]:checked');
 
@@ -285,16 +248,16 @@ deleteButton.addEventListener('click', () => {
     checkboxes.forEach((checkbox) => {
         const savedItem = checkbox.parentNode;
         const indexOfSavedItem = savedItems.indexOf(savedItem.textContent)
-        savedItems.splice(indexOfSavedItem)
+        savedItems.splice(indexOfSavedItem,1)
         savedItemsContainer.removeChild(savedItem);
     });
-});
 
-// Add event listener to the cancel button
-cancelButton2.addEventListener('click', () => {
-    // Uncheck all checkboxes inside the savedItemsContainer
-    const checkboxes = savedItemsContainer.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-    });
+    console.log(savedItems);
+    if(savedItems.length==0){
+        searchInput.style.display="block"
+        controlBtns.style.display="block"
+        deleteBtn.style.display="none"
+        cancelBtn2.style.display="none"
+    }
+
 });
