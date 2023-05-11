@@ -1,15 +1,15 @@
 const saveBtn = document.getElementById("save-btn")
 const deleteBtn = document.getElementById("delete-btn")
 const cancelBtn = document.getElementById("cancel-btn")
-const cancelBtn2= document.getElementById("cancel-btn-2")
-const editBtn= document.getElementById("edit-btn")
+const cancelBtn2 = document.getElementById("cancel-btn-2")
+const editBtn = document.getElementById("edit-btn")
 const controlBtns = document.getElementById("control-btns")
 
 saveBtn.style.display = "none"
 deleteBtn.style.display = "none"
 cancelBtn.style.display = "none"
 cancelBtn2.style.display = "none"
-editBtn.style.display="none"
+editBtn.style.display = "none"
 
 
 
@@ -20,14 +20,16 @@ const suggestionsList = document.getElementById('suggestions');
 searchInput.addEventListener('input', () => {
     const inputValue = searchInput.value;
     if (inputValue.length >= 3) {
-        
-        
+
+
 
         const suggestedKeywords = ['parrot', 'parrot special', 'cat', 'catwwsss', 'elderberry'];
         const filteredKeywords = suggestedKeywords.filter(keyword => keyword.includes(inputValue));
         const html = filteredKeywords.map(keyword => `<li>${keyword} </li>`).join('');
         suggestionsList.innerHTML = html;
         suggestionsList.style.display = 'block';
+        controlBtns.style.display="block"
+        editBtn.style.display="none"
     } else {
 
         suggestionsList.style.display = 'none';
@@ -102,6 +104,10 @@ const addAllItems = () => {
             if (!isVisible(selectedItems)) {
                 saveBtn.style.display = "none"
                 cancelBtn.style.display = "none"
+            } else {
+                saveBtn.style.display = "block"
+                cancelBtn.style.display = "block"
+
             }
         });
 
@@ -138,15 +144,15 @@ selectAllButton.addEventListener('click', () => {
 const clearButton = document.getElementById("clear-btn")
 
 clearButton.addEventListener('click', () => {
-    
+
     searchInput.value = ""
-    suggestionsList.innerHTML=""
+    suggestionsList.innerHTML = ""
     suggestionsList.style.display = "none"
 
 })
 
-cancelBtn.addEventListener('click',()=>{
-    selectedItems.innerHTML=""
+cancelBtn.addEventListener('click', () => {
+    selectedItems.innerHTML = ""
     if (!isVisible(selectedItems)) {
         saveBtn.style.display = "none"
         cancelBtn.style.display = "none"
@@ -163,22 +169,22 @@ saveBtn.addEventListener("click", function () {
         if (!savedItems.includes(textContent)) { // check if the saved items array already includes the text content
             savedItems.push(textContent); // add the trimmed text content to saved items
         }
-     
+
     });
-    
+
 
     showSavedItems()
-    if(isVisible(savedItemsContainer)){
-        saveBtn.style.display="none"
+    if (isVisible(savedItemsContainer)) {
+        saveBtn.style.display = "none"
         cancelBtn.click() //removing all the selected items
-        cancelBtn.style.display="none"
-        editBtn.style.display="inline-block"
-        searchInput.style.display="none"
+        cancelBtn.style.display = "none"
+        editBtn.style.display = "inline-block"
+        // searchInput.style.display = "none"
         clearButton.click()
         controlBtns.style.display = "none"
     }
 
-    
+
 });
 
 const showSavedItems = () => {
@@ -209,33 +215,33 @@ const showSavedItems = () => {
         // append the item div to the saved items container
         savedItemsContainer.appendChild(itemDiv);
 
-        checkbox.style.display="none"
+        checkbox.style.display = "none"
     });
 
     console.log(savedItems);
-    
-    
+
+
 }
 
-editBtn.addEventListener("click",()=>{
+editBtn.addEventListener("click", () => {
     const savedItemsCheckbox = document.getElementsByClassName("saved-items-checkbox")
-    for(let checkbox of savedItemsCheckbox){
-        checkbox.style.display="block"
+    for (let checkbox of savedItemsCheckbox) {
+        checkbox.style.display = "block"
     }
-    editBtn.style.display="none"
-    deleteBtn.style.display="block"
-    cancelBtn2.style.display="block"
+    editBtn.style.display = "none"
+    deleteBtn.style.display = "block"
+    cancelBtn2.style.display = "block"
 })
 
 
-cancelBtn2.addEventListener('click',()=>{
+cancelBtn2.addEventListener('click', () => {
     const savedItemsCheckbox = document.getElementsByClassName("saved-items-checkbox")
-    for(let checkbox of savedItemsCheckbox){
+    for (let checkbox of savedItemsCheckbox) {
         checkbox.checked = false
-        checkbox.style.display="none"
-        editBtn.style.display="block"
-        deleteBtn.style.display="none"
-        cancelBtn2.style.display="none"
+        checkbox.style.display = "none"
+        editBtn.style.display = "block"
+        deleteBtn.style.display = "none"
+        cancelBtn2.style.display = "none"
     }
 })
 
@@ -248,16 +254,16 @@ deleteBtn.addEventListener('click', () => {
     checkboxes.forEach((checkbox) => {
         const savedItem = checkbox.parentNode;
         const indexOfSavedItem = savedItems.indexOf(savedItem.textContent)
-        savedItems.splice(indexOfSavedItem,1)
+        savedItems.splice(indexOfSavedItem, 1)
         savedItemsContainer.removeChild(savedItem);
     });
 
     console.log(savedItems);
-    if(savedItems.length==0){
-        searchInput.style.display="block"
-        controlBtns.style.display="block"
-        deleteBtn.style.display="none"
-        cancelBtn2.style.display="none"
+    if (savedItems.length == 0) {
+        searchInput.style.display = "block"
+        controlBtns.style.display = "block"
+        deleteBtn.style.display = "none"
+        cancelBtn2.style.display = "none"
     }
 
 });
